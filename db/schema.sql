@@ -1,6 +1,7 @@
-DROP TABLE IF EXISTS departments;
-DROP TABLE IF EXISTS role;
 DROP TABLE IF EXISTS employee;
+DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS departments;
+
 
 
 CREATE TABLE departments (
