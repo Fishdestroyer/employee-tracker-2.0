@@ -73,10 +73,10 @@ const prompt = () => {
 }
 
 const department = () => {
-    const sql = `SELECT department_name FROM departments`;
+    const sql = `SELECT department_name AS "dept." FROM departments`;
     db.query(sql, (err, rows) => {
         if(err){
-            res.status(500).json({ error: err.message});
+            console.log(500).json({ error: err.message});
             return;
         }
         console.log({
@@ -115,6 +115,27 @@ const employees = () => {
         });
     });
 };
+
+const addDept = () => {
+    addDept.prompt = [{
+
+        type: 'input',
+        name: 'department_name',
+        message: 'What department would you like to add?'
+    }
+
+    ];
+    inquirer.prompt(addDept.prompt).then((answers)=> {
+      console.log(answers.department_name);
+    const department_name =answers.department_name;
+    const sql =`INSERT INTO departments (department_name) VALUES ('${department_name}')`;
+       //onsole.log(sql);
+        db.query(sql, (err, results) => {
+           if (err) throw err;
+            console.log('Department Added!');
+    });
+  });
+};
      
 
 //db.query(`SELECT * FROM employee`, (err, rows) => {
@@ -146,10 +167,8 @@ const employees = () => {
   //  });
 
 
-
+module.exports = prompt;
 
 
     prompt();
-  
-
   
