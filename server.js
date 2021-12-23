@@ -154,7 +154,7 @@ const addARole = () => {
         type: 'input',
         name: 'dept',
         choices: function () {
-            let choiceArray = results[1].map(choice => choice.dept_name);
+            let choiceArray = results[1].map(choice => choice.department_name);
             return choiceArray;
         },
         message: "Which dept. does this role belong to?:"
@@ -167,7 +167,7 @@ const addARole = () => {
         `INSERT INTO role(title, salary, department_id) 
         VALUES
         ("${answer.newTitle}", "${answer.newSalary}", 
-        (SELECT id FROM department WHERE dept_name = "${answer.dept}"));`
+        (SELECT id FROM departments WHERE department_name = "${answer.dept}"));`
 
         db.query(sql, (err, results) => {
             if (err) throw err;
