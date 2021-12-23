@@ -136,6 +136,47 @@ const addDept = () => {
     });
   });
 };
+
+const addARole = () => {
+    addARole.prompt = [{
+
+        type: 'input',
+        name: 'role',
+        message: 'What role would you like to add ?:'
+    },
+    {
+        type: 'input',
+        name: 'salary',
+        message: 'What is the salary for this role?:'
+    },
+
+    {
+        type: 'input',
+        name: 'dept',
+        choices: function () {
+            let choiceArray = results[1].map(choice => choice.dept_name);
+            return choiceArray;
+        },
+        message: "Which dept. does this role belong to?:"
+
+    }
+    
+
+   ];return((answer) => {
+    const sql =
+        `INSERT INTO role(title, salary, department_id) 
+        VALUES
+        ("${answer.newTitle}", "${answer.newSalary}", 
+        (SELECT id FROM department WHERE dept_name = "${answer.dept}"));`
+
+        db.query(sql, (err, results) => {
+            if (err) throw err;
+             console.log('Department Added!');
+    
+   });
+});
+}
+
      
 
 //db.query(`SELECT * FROM employee`, (err, rows) => {
