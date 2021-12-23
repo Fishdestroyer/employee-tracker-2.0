@@ -138,44 +138,69 @@ const addDept = () => {
 };
 
 const addARole = () => {
-    addARole.prompt = [{
+    const addRoleQuery = `SELECT * FROM role; SELECT * FROM department`
+    db.query(addRoleQuery, (err, results) => {
+        if (err) throw err;
 
-        type: 'input',
-        name: 'role',
-        message: 'What role would you like to add ?:'
-    },
-    {
-        type: 'input',
-        name: 'salary',
-        message: 'What is the salary for this role?:'
-    },
+        console.log('');
+        console.table('List of current Roles:'), results[0];
 
-    {
-        type: 'input',
-        name: 'dept',
-        choices: function () {
-            let choiceArray = results[1].map(choice => choice.department_name);
-            return choiceArray;
-        },
-        message: "Which dept. does this role belong to?:"
-
-    }
-    
-
-   ];return((answer) => {
-    const sql =
-        `INSERT INTO role(title, salary, department_id) 
-        VALUES
-        ("${answer.newTitle}", "${answer.newSalary}", 
-        (SELECT id FROM departments WHERE department_name = "${answer.dept}"));`
-
-        db.query(sql, (err, results) => {
-            if (err) throw err;
-             console.log('Department Added!');
-    
-   });
-});
+        inquirer.prompt([
+            {
+                name: 'newTitle',
+                type: 'input',
+                message: 'Please enter the new role title:'
+            },
+            {
+                name: 'newSalary',
+                type: 'input',
+                message: 'Please enter the salary for the new Title:'
+            },
+            {
+                name: 'dept',
+                type: 'list',
+                choices: function () {
+                    let choiceArray = results[1].map(choice => choice.dept_name);
+                    return choiceArray;
+                },
+                message: 'Select the Department that will contain this role:'
+            }
+        ]).then((answer) => {
+            db.query(
+                `INSERT INTO role(title, salary, department_id) 
+                VALUES
+                ("${answer.newTitle}", "${answer.newSalary}", 
+                (SELECT id FROM department WHERE dept_name = "${answer.dept}"));`
+            )
+            setTimeout(promptUser, 1000);
+        })
+    })
 }
+
+
+    
+
+  // ]).then((answer) => {
+    //db.query(
+      //  `INSERT INTO role(title, salary, department_id) 
+        //VALUES
+        //("${answer.newRole}", "${answer.newSalary}", 
+       // (SELECT id FROM departments WHERE department_name = "${answer.department_name}"));`
+   // )
+    //setTimeout(promptUser, 1000);
+    // });
+    //});
+
+   // };
+
+
+
+
+       
+        
+   
+
+
 
      
 
@@ -212,4 +237,3 @@ module.exports = prompt;
 
 
     prompt();
-  
