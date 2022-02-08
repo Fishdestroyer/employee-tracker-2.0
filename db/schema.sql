@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS employee;
-DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS departments;
 
 
@@ -9,7 +9,7 @@ CREATE TABLE departments (
     department_name VARCHAR(25) NOT NULL
 );
 
-CREATE TABLE role (
+CREATE TABLE roles (
 
     role_id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
     job_title VARCHAR(50) NOT NULL,
