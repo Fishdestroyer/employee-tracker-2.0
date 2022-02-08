@@ -152,10 +152,7 @@ addDept = () => {
 };
 
 addARole = () => {
-    let departmentOptions = [];
-    for (i = 0; i < department.length; i++) {
-        departmentOptions.push(Object(department[i]));
-    };
+    
 
     inquirer.prompt([
         {
@@ -175,34 +172,17 @@ addARole = () => {
             choices: ['1', '2', '3']
         },
     ]).then(function (answer) {
-        db.query(`INSERT INTO role (job_title, salary, department_id) VALUES ('${answer.job_title}', '${answer.salary}', ${answer.department_name})`, (err, res) => {
+        db.query(`INSERT INTO role (job_title, salary, department_id) VALUES ('${answer.title}', '${answer.salary}', ${answer.department_name})`, (err, res) => {
             if (err) throw err;
 
-            console.log("1 new role added: " + answer.job_title);
-            //getRole();
-            //start();
-
+            console.log("1 new role added: " + answer.title);
+            
+return prompt();
         })
-        prompt();
-    })
+      
+    });
+
 };
-
-
-
-
-
-
-//test server connection
-//app.get('/', (req, res) => {
-// res.json({
-// message: 'Hello World'
-//});
-//});
-
-// app.use((req, res) => {
-//   res.status(404).end();
-//  });
-
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
