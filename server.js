@@ -115,11 +115,12 @@ const employees = () => {
         console.log({
             message: 'WOOOOHOOO 3 in a row',
             data: rows
-        });
-    });
+        })
+        prompt();
+    })
 };
 
-addDept = () => {
+ const addDept = () => {
     const sql = `SELECT * FROM departments`;
     db.query(sql, (err, rows) => {
         if (err) {
@@ -151,8 +152,8 @@ addDept = () => {
     });
 };
 
-addARole = () => {
-    
+const addARole = () => {
+
 
     inquirer.prompt([
         {
@@ -176,13 +177,56 @@ addARole = () => {
             if (err) throw err;
 
             console.log("1 new role added: " + answer.title);
-            
-return prompt();
+
+           // return prompt();
         })
-      
+
     });
 
 };
+
+
+
+const addAnEmployee = () => {
+    console.log('This is fun!');
+
+
+    inquirer.prompt([
+        {
+            name: "last_name",
+            type: "input",
+            message: "What is the new employess last name?"
+        },
+        {
+            name: "first_name",
+            type: "input",
+            message: "What is the new employees first name?"
+        },
+      
+       
+        {
+            name: "title",
+            type: "input",
+            message: "What is the new employees role?"
+        },
+        {
+            name: "manager",
+            type: "input",
+            message: "Who is the new employees manager?"
+        }
+    ]).then(function (answer) {
+        db.query(`INSERT INTO employee (last_name, first_name, role, manager) VALUES ('${answer.last_name}', '${answer.first_name}', '${answer.title}', ${answer.manager}`, (err, res) => {
+            if (err) throw err;
+
+            console.log("1 new employee added: " + answer.last_name);
+
+
+        });
+    
+    });
+
+};
+
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
