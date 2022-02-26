@@ -115,11 +115,12 @@ const employees = () => {
         console.log({
             message: 'WOOOOHOOO 3 in a row',
             data: rows
-        });
-    });
+        })
+        prompt();
+    })
 };
 
-addDept = () => {
+ const addDept = () => {
     const sql = `SELECT * FROM departments`;
     db.query(sql, (err, rows) => {
         if (err) {
@@ -151,11 +152,8 @@ addDept = () => {
     });
 };
 
-addARole = () => {
-    let departmentOptions = [];
-    for (i = 0; i < department.length; i++) {
-        departmentOptions.push(Object(department[i]));
-    };
+const addARole = () => {
+
 
     inquirer.prompt([
         {
@@ -175,33 +173,59 @@ addARole = () => {
             choices: ['1', '2', '3']
         },
     ]).then(function (answer) {
-        db.query(`INSERT INTO role (job_title, salary, department_id) VALUES ('${answer.job_title}', '${answer.salary}', ${answer.department_name})`, (err, res) => {
+        db.query(`INSERT INTO role (job_title, salary, department_id) VALUES ('${answer.title}', '${answer.salary}', ${answer.department_name})`, (err, res) => {
             if (err) throw err;
 
-            console.log("1 new role added: " + answer.job_title);
-            //getRole();
-            //start();
+            console.log("1 new role added: " + answer.title);
 
+           // return prompt();
         })
-        prompt();
-    })
+
+    });
+
 };
 
 
 
+const addAnEmployee = () => {
+    console.log('This is fun!');
 
 
+    inquirer.prompt([
+        {
+            name: "last_name",
+            type: "input",
+            message: "What is the new employess last name?"
+        },
+        {
+            name: "first_name",
+            type: "input",
+            message: "What is the new employees first name?"
+        },
+      
+       
+        {
+            name: "title",
+            type: "input",
+            message: "What is the new employees role?"
+        },
+        {
+            name: "manager",
+            type: "input",
+            message: "Who is the new employees manager?"
+        }
+    ]).then(function (answer) {
+        db.query(`INSERT INTO employee (last_name, first_name, role, manager) VALUES ('${answer.last_name}', '${answer.first_name}', '${answer.title}', ${answer.manager}`, (err, res) => {
+            if (err) throw err;
 
-//test server connection
-//app.get('/', (req, res) => {
-// res.json({
-// message: 'Hello World'
-//});
-//});
+            console.log("1 new employee added: " + answer.last_name);
 
-// app.use((req, res) => {
-//   res.status(404).end();
-//  });
+
+        });
+    
+    });
+
+};
 
 
 app.listen(PORT, () => {
