@@ -64,12 +64,9 @@ const prompt = async () => {
             addARole();
             break;
 
-        case 'Add an employee':
-            addAnEmployee;
-            break;
-        case 'Update an employee':
-            updateAnEmployee;
-            break;
+            case 'Add an employee':
+                addAnEmployee;
+                break;
     };
 };
 
@@ -84,7 +81,7 @@ const department = () => {
             message: 'You did it!',
             data: rows
         });
-        prompt();
+        
     });
 };
 
@@ -100,7 +97,7 @@ const role = () => {
             message: 'Whoa Nelly, You did it again!',
             data: rows
         })
-        prompt();
+        
     })
 };
 
@@ -116,7 +113,7 @@ const employees = () => {
             message: 'WOOOOHOOO 3 in a row',
             data: rows
         })
-        prompt();
+        
     })
 };
 
@@ -188,10 +185,8 @@ const addARole = () => {
 
 
 const addAnEmployee = () => {
-    console.log('This is fun!');
-
-
-    inquirer.prompt([
+   
+    addAnEmployee.prompt([
         {
             name: "last_name",
             type: "input",
@@ -214,17 +209,17 @@ const addAnEmployee = () => {
             type: "input",
             message: "Who is the new employees manager?"
         }
-    ]).then(function (answer) {
+    ]);.then(function (answer) {
         db.query(`INSERT INTO employee (last_name, first_name, role, manager) VALUES ('${answer.last_name}', '${answer.first_name}', '${answer.title}', ${answer.manager}`, (err, res) => {
             if (err) throw err;
 
             console.log("1 new employee added: " + answer.last_name);
 
 
-        });
+        })
     
-    });
-
+    })
+  
 };
 
 
