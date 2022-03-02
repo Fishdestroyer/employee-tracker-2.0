@@ -75,14 +75,15 @@ const department = () => {
     db.query(sql, (err, rows) => {
         if (err) {
             console.log(500).json({ error: err.message });
-            return prompt;
+            
         }
         console.log({
             message: 'You did it!',
             data: rows
         });
-        
+        prompt();
     });
+    
 };
 
 
@@ -96,9 +97,9 @@ const role = () => {
         console.log({
             message: 'Whoa Nelly, You did it again!',
             data: rows
-        })
-        
-    })
+        });
+        prompt();
+    });
 };
 
 
@@ -112,9 +113,9 @@ const employees = () => {
         console.log({
             message: 'WOOOOHOOO 3 in a row',
             data: rows
-        })
-        
-    })
+        });
+        prompt();
+    });
 };
 
  const addDept = () => {
@@ -176,7 +177,8 @@ const addARole = () => {
             console.log("1 new role added: " + answer.title);
 
            // return prompt();
-        })
+        });
+        prompt();
 
     });
 
@@ -209,7 +211,7 @@ const addAnEmployee = () => {
             type: "input",
             message: "Who is the new employees manager?"
         }
-    ]);.then(function (answer) {
+    ]).then(function (answer) {
         db.query(`INSERT INTO employee (last_name, first_name, role, manager) VALUES ('${answer.last_name}', '${answer.first_name}', '${answer.title}', ${answer.manager}`, (err, res) => {
             if (err) throw err;
 
